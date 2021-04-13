@@ -5,20 +5,26 @@ const player1 = {
   player: 1,
   name: "SUBZERO",
   hp: 100,
+  changeHP: changeHP,
+  elHP: elHP,
+  renderHP: renderHP,
   img: "http://reactmarathon-api.herokuapp.com/assets/subzero.gif",
   weapon: ["kunai"],
   attack: function () {
-    console.log(player1.name + " Fight...");
+    console.log(this.name + " Fight...");
   },
 };
 const player2 = {
   player: 2,
   name: "SCORPION",
   hp: 100,
+  changeHP: changeHP,
+  elHP: elHP,
+  renderHP: renderHP,
   img: "http://reactmarathon-api.herokuapp.com/assets/scorpion.gif",
   weapon: ["katana"],
   attack: function () {
-    console.log(player2.name + " Fight...");
+    console.log(this.name + " Fight...");
   },
 };
 
@@ -56,17 +62,20 @@ function createPlayer(playerObj) {
 $arenas.appendChild(createPlayer(player1));
 $arenas.appendChild(createPlayer(player2));
 
-function changeHP(player) {
-  const $playerLife = document.querySelector(
-    ".player" + player.player + " .life"
-  );
-  player.hp -= getRandom(20);
-
-  if (player.hp <= 0) {
-    player.hp = 0;
+function changeHP(damage) {
+  this.hp -= damage;
+  if (this.hp <= 0) {
+    this.hp = 0;
   }
+  return this.hp;
+}
 
-  $playerLife.style.width = player.hp + "%";
+function elHP() {
+  return document.querySelector(".player" + this.player + " .life");
+}
+
+function renderHP() {
+  return (this.elHP().style.width = this.hp + "%");
 }
 
 function getRandom(num) {
@@ -74,8 +83,10 @@ function getRandom(num) {
 }
 
 $randomButton.addEventListener("click", function () {
-  changeHP(player1);
-  changeHP(player2);
+  player1.changeHP(getRandom(20));
+  player2.changeHP(getRandom(20));
+  player1.renderHP();
+  player2.renderHP();
 
   if (player1.hp === 0 || player2.hp === 0) {
     $randomButton.disabled = true;
@@ -93,9 +104,25 @@ $randomButton.addEventListener("click", function () {
 function showResultText(name) {
   const $resultText = createElement("div", "resultText");
   if (name) {
-    $resultText.innerText = name + "wins";
+    $resultText.innerText = name + " " + "wins";
+    createReloadButton();
   } else {
     $resultText.innerText = "draw";
+    createReloadButton();
   }
   return $resultText;
+}
+
+function createReloadButton() {
+  const $reloadWrap = createElement("div", "reloadWrap");
+  const $reloadButton = createElement("button", "button");
+
+  $reloadButton.innerText = "restart";
+
+  $arenas.appendChild($reloadWrap);
+  $reloadWrap.appendChild($reloadButton);
+
+  $reloadButton.addEventListener("click", () => {
+    window.location.reload();
+  });
 }
