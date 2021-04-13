@@ -1,30 +1,30 @@
-const $arenas = document.querySelector(".arenas");
-const $randomButton = document.querySelector(".button");
+const $arenas = document.querySelector('.arenas');
+const $randomButton = document.querySelector('.button');
 
 const player1 = {
   player: 1,
-  name: "SUBZERO",
+  name: 'SUBZERO',
   hp: 100,
-  changeHP: changeHP,
-  elHP: elHP,
-  renderHP: renderHP,
-  img: "http://reactmarathon-api.herokuapp.com/assets/subzero.gif",
-  weapon: ["kunai"],
-  attack: function () {
-    console.log(this.name + " Fight...");
+  changeHP,
+  elHP,
+  renderHP,
+  img: 'http://reactmarathon-api.herokuapp.com/assets/subzero.gif',
+  weapon: ['kunai'],
+  attack() {
+    console.log(`${this.name} Fight...`);
   },
 };
 const player2 = {
   player: 2,
-  name: "SCORPION",
+  name: 'SCORPION',
   hp: 100,
-  changeHP: changeHP,
-  elHP: elHP,
-  renderHP: renderHP,
-  img: "http://reactmarathon-api.herokuapp.com/assets/scorpion.gif",
-  weapon: ["katana"],
-  attack: function () {
-    console.log(this.name + " Fight...");
+  changeHP,
+  elHP,
+  renderHP,
+  img: 'http://reactmarathon-api.herokuapp.com/assets/scorpion.gif',
+  weapon: ['katana'],
+  attack() {
+    console.log(`${this.name} Fight...`);
   },
 };
 
@@ -37,14 +37,14 @@ function createElement(tag, className) {
 }
 
 function createPlayer(playerObj) {
-  const $player = createElement("div", "player" + playerObj.player);
-  const $progressbar = createElement("div", "progressbar");
-  const $character = createElement("div", "character");
-  const $life = createElement("div", "life");
-  const $name = createElement("div", "name");
-  const $img = createElement("img");
+  const $player = createElement('div', `player${playerObj.player}`);
+  const $progressbar = createElement('div', 'progressbar');
+  const $character = createElement('div', 'character');
+  const $life = createElement('div', 'life');
+  const $name = createElement('div', 'name');
+  const $img = createElement('img');
 
-  $life.style.width = playerObj.hp + "%";
+  $life.style.width = `${playerObj.hp}%`;
   $name.innerText = playerObj.name;
   $img.src = playerObj.img;
 
@@ -71,18 +71,44 @@ function changeHP(damage) {
 }
 
 function elHP() {
-  return document.querySelector(".player" + this.player + " .life");
+  return document.querySelector(`.player${this.player} .life`);
 }
 
 function renderHP() {
-  return (this.elHP().style.width = this.hp + "%");
+  this.elHP().style.width = `${this.hp}%`;
+  return this.hp;
 }
 
 function getRandom(num) {
   return Math.ceil(Math.random() * num);
 }
 
-$randomButton.addEventListener("click", function () {
+function createReloadButton() {
+  const $reloadWrap = createElement('div', 'reloadWrap');
+  const $reloadButton = createElement('button', 'button');
+
+  $reloadButton.innerText = 'restart';
+
+  $arenas.appendChild($reloadWrap);
+  $reloadWrap.appendChild($reloadButton);
+
+  $reloadButton.addEventListener('click', () => {
+    window.location.reload();
+  });
+}
+
+function showResultText(name) {
+  const $resultText = createElement('div', 'resultText');
+  if (name) {
+    $resultText.innerText = `${name} ` + 'wins';
+  } else {
+    $resultText.innerText = 'draw';
+  }
+  createReloadButton();
+  return $resultText;
+}
+
+$randomButton.addEventListener('click', () => {
   player1.changeHP(getRandom(20));
   player2.changeHP(getRandom(20));
   player1.renderHP();
@@ -100,29 +126,3 @@ $randomButton.addEventListener("click", function () {
     $arenas.appendChild(showResultText());
   }
 });
-
-function showResultText(name) {
-  const $resultText = createElement("div", "resultText");
-  if (name) {
-    $resultText.innerText = name + " " + "wins";
-    createReloadButton();
-  } else {
-    $resultText.innerText = "draw";
-    createReloadButton();
-  }
-  return $resultText;
-}
-
-function createReloadButton() {
-  const $reloadWrap = createElement("div", "reloadWrap");
-  const $reloadButton = createElement("button", "button");
-
-  $reloadButton.innerText = "restart";
-
-  $arenas.appendChild($reloadWrap);
-  $reloadWrap.appendChild($reloadButton);
-
-  $reloadButton.addEventListener("click", () => {
-    window.location.reload();
-  });
-}
