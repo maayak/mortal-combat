@@ -69,6 +69,7 @@ body {
 .arenas {
   width: 786px;
   height: 578px;
+  min-height: 70vh;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -176,6 +177,10 @@ body {
   background-size: cover;
   background-position: center;
   border-top: 4px solid #f5d100;
+  padding: 6px 40px;
+  overflow: scroll;
+  color: white;
+  font-family: Arial;
 }
 
 .character {
@@ -194,13 +199,15 @@ body {
 }
 
 .player2 .character img {
-  transform: scaleX(-1);
+  transform: scaleX(-1) translate(50%, 0);
 }
 
 .character img {
   height: 100%;
   position: absolute;
   bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
 
 .fight {
@@ -365,12 +372,12 @@ form:invalid button[class="button"]:active::after {
 .ul label span {
   position: relative;
   display: inline-block;
-  text-transform: uppercase;
   width: 80px;
   height: 50px;
   line-height: 50px;
   transition: 0.3s;
   text-align: center;
+  text-transform: uppercase;
   margin-top: -3px;
 }
 .ul label span::before {
