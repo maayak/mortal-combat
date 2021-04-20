@@ -1,5 +1,6 @@
 const $arenas = document.querySelector('.arenas');
 const $formFight = document.querySelector('.control');
+const $chat = document.querySelector('.chat');
 
 const player1 = {
   player: 1,
@@ -32,6 +33,46 @@ const HIT = {
 };
 
 const ATTACK = ['head', 'body', 'foot'];
+
+const logs = {
+  start: 'Часы показывали [time], когда [player1] и [player2] бросили вызов друг другу.',
+  end: [
+    'Результат удара [playerWins]: [playerLose] - труп',
+    '[playerLose] погиб от удара бойца [playerWins]',
+    'Результат боя: [playerLose] - жертва, [playerWins] - убийца',
+  ],
+  hit: [
+    '[playerDefence] пытался сконцентрироваться, но [playerKick] разбежавшись раздробил копчиком левое ухо врага.',
+    '[playerDefence] расстроился, как вдруг, неожиданно [playerKick] случайно раздробил грудью грудину противника.',
+    '[playerDefence] зажмурился, а в это время [playerKick], прослезившись, раздробил кулаком пах оппонента.',
+    '[playerDefence] чесал затылок, и внезапно неустрашимый [playerKick] отчаянно размозжил грудью левый бицепс оппонента.',
+    '[playerDefence] задумался, но внезапно [playerKick] случайно влепил грубый удар копчиком в пояс оппонента.',
+    '[playerDefence] ковырялся в зубах, но [playerKick] проснувшись влепил тяжелый удар пальцем в кадык врага.',
+    '[playerDefence] вспомнил что-то важное, но внезапно [playerKick] зевнув, размозжил открытой ладонью челюсть противника.',
+    '[playerDefence] осмотрелся, и в это время [playerKick] мимоходом раздробил стопой аппендикс соперника.',
+    '[playerDefence] кашлянул, но внезапно [playerKick] показав палец, размозжил пальцем грудь соперника.',
+    '[playerDefence] пытался что-то сказать, а жестокий [playerKick] проснувшись размозжил копчиком левую ногу противника.',
+    '[playerDefence] забылся, как внезапно безумный [playerKick] со скуки, влепил удар коленом в левый бок соперника.',
+    '[playerDefence] поперхнулся, а за это [playerKick] мимоходом раздробил коленом висок врага.',
+    '[playerDefence] расстроился, а в это время наглый [playerKick] пошатнувшись размозжил копчиком губы оппонента.',
+    '[playerDefence] осмотрелся, но внезапно [playerKick] робко размозжил коленом левый глаз противника.',
+    '[playerDefence] осмотрелся, а [playerKick] вломил дробящий удар плечом, пробив блок, куда обычно не бьют оппонента.',
+    '[playerDefence] ковырялся в зубах, как вдруг, неожиданно [playerKick] отчаянно размозжил плечом мышцы пресса оппонента.',
+    '[playerDefence] пришел в себя, и в это время [playerKick] провел разбивающий удар кистью руки, пробив блок, в голень противника.',
+    '[playerDefence] пошатнулся, а в это время [playerKick] хихикая влепил грубый удар открытой ладонью по бедрам врага.',
+  ],
+  defence: [
+    '[playerKick] потерял момент и храбрый [playerDefence] отпрыгнул от удара открытой ладонью в ключицу.',
+    '[playerKick] не контролировал ситуацию, и потому [playerDefence] поставил блок на удар пяткой в правую грудь.',
+    '[playerKick] потерял момент и [playerDefence] поставил блок на удар коленом по селезенке.',
+    '[playerKick] поскользнулся и задумчивый [playerDefence] поставил блок на тычок головой в бровь.',
+    '[playerKick] старался провести удар, но непобедимый [playerDefence] ушел в сторону от удара копчиком прямо в пятку.',
+    '[playerKick] обманулся и жестокий [playerDefence] блокировал удар стопой в солнечное сплетение.',
+    '[playerKick] не думал о бое, потому расстроенный [playerDefence] отпрыгнул от удара кулаком куда обычно не бьют.',
+    '[playerKick] обманулся и жестокий [playerDefence] блокировал удар стопой в солнечное сплетение.'
+  ],
+  draw: 'Ничья - это тоже победа!'
+};
 
 function attackPlayer() {
   console.log(`${this.name} Fight...`);
@@ -106,7 +147,7 @@ function createReloadButton() {
 function showResultText(name) {
   const $resultText = createElement('div', 'resultText');
   if (name) {
-    $resultText.innerText = `${name} ` + 'wins';
+    $resultText.innerText = `${name} wins`;
   } else {
     $resultText.innerText = 'draw';
   }
@@ -125,7 +166,7 @@ function enemyAttack() {
   return enemy;
 }
 
-function attack() {
+function playerAttack() {
   const attack = {};
   for (let item of $formFight) {
     if (item.checked && item.name === 'hit') {
@@ -141,36 +182,81 @@ function attack() {
   return attack;
 }
 
-function getResultHP(side, playerObj, playerNumber) {
-  if (side.hit !== playerObj.defence) {
-    playerNumber.changeHP(side.value);
-    playerNumber.renderHP();
-  }
-}
-
 function getResultTitle(playerCompare, playerResult) {
   if (playerCompare.hp === 0 && playerCompare.hp < playerResult.hp) {
     $arenas.appendChild(showResultText(playerResult.name));
     $formFight.disabled = true;
     createReloadButton();
+    generateLogs('end', player1, player2);
   }
   if (playerCompare.hp === 0 && playerResult.hp === 0) {
     $arenas.appendChild(showResultText());
     $formFight.disabled = true;
     createReloadButton();
+    generateLogs('draw', player1, player2);
   }
 }
+
+function generateLogs(type, attacker, defender, damage) {
+  let text = '';
+  const currentDate = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+  switch (type) {
+    case 'start':
+      text = logs[type]
+        .replace('[time]', currentDate)
+        .replace('[player1]', attacker.name)
+        .replace('[player2]', defender.name);
+      break;
+    case 'hit':
+      text = logs[type][getRandom(logs[type].length - 1)]
+        .replace('[playerKick]', attacker.name)
+        .replace('[playerDefence]', defender.name);
+      text = `${currentDate} - ${text} -${damage} [${defender.hp} / 100]`;
+      break;
+    case 'defence':
+      text = logs[type][getRandom(logs[type].length - 1)]
+        .replace('[playerKick]', attacker.name)
+        .replace('[playerDefence]', defender.name);
+      break;
+    case 'end':
+      text = logs[type][getRandom(logs[type].length)]
+        .replace('[playerWins]', attacker.name)
+        .replace('[playerLose]', defender.name);
+      break;
+    case 'draw':
+      text = logs[type];
+      break;
+  }
+  const el = `<p>${text}</p>`;
+  $chat.insertAdjacentHTML('afterbegin', el);
+}
+
+
 
 $formFight.addEventListener('submit', (e) => {
   e.preventDefault();
   const enemy = enemyAttack();
-  const player = attack();
+  const player = playerAttack();
 
-  getResultHP(enemy, player, player1);
-  getResultHP(player, enemy, player2);
+  if (player.hit !== enemy.defence) {
+    player2.changeHP(player.value);
+    player2.renderHP();
+    generateLogs('hit', player1, player2, player.value);
+  } else {
+    generateLogs('defence', player1, player2);
+  }
+
+  if (enemy.hit !== player.defence) {
+    player1.changeHP(enemy.value);
+    player1.renderHP();
+    generateLogs('hit', player2, player1, enemy.value);
+  } else {
+    generateLogs('defence', player2, player1);
+  }
 
   getResultTitle(player1, player2);
 });
-
+generateLogs('start', player1, player2);
 $arenas.appendChild(createPlayer(player1));
 $arenas.appendChild(createPlayer(player2));
