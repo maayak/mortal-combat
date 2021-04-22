@@ -1,7 +1,6 @@
-import LOGS from './logs.js';
-import { $chat } from './globalConstants.js';
-import random from './random.js';
-import currentDate from './time.js';
+import { $chat, LOGS } from './globalConstants.js';
+import { random, currentDate } from './utils.js';
+
 
 const generateLogs = (type, { name: attackerName }, { name: defenderName, hp }, damage) => {
   let text = '';
