@@ -2,7 +2,7 @@ import { $formFight } from './globalConstants.js';
 import random from './random.js';
 import { HIT } from './hitAttack.js';
 
-function playerAttack() {
+const playerAttack = () => {
   const attack = {};
 
   [].forEach.call($formFight, (item) => {

@@ -1,6 +1,6 @@
 import createElement from './createElement.js';
 
-function createPlayer(playerObj) {
+const createPlayer = (playerObj) => {
   const { hp, name, img } = playerObj;
   const $player = createElement('div', `player${playerObj.player}`);
   const $progressbar = createElement('div', 'progressbar');

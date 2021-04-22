@@ -4,7 +4,7 @@ import createReloadButton from './createReloadButton.js';
 import generateLogs from './generateLogs.js';
 import showResultText from './showResultText.js';
 
-function getResultTitle(playerObj1, playerObj2) {
+let getResultTitle = (playerObj1, playerObj2) => {
   const { hp: player1Hp } = playerObj1;
   const { hp: player2Hp, name: player2Name } = playerObj2;
   if (player1Hp === 0 && player1Hp < player2Hp) {

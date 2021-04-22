@@ -3,7 +3,7 @@ import { $chat } from './globalConstants.js';
 import random from './random.js';
 import currentDate from './time.js';
 
-function generateLogs(type, attacker, defender, damage) {
+const generateLogs = (type, attacker, defender, damage) => {
   let text = '';
   const { name: attackerName } = attacker;
   const { name: defenderName, hp } = defender;

@@ -38,4 +38,4 @@ const LOGS = {
   draw: 'Ничья - это тоже победа!',
 };
 
-export default logs;
+export default LOGS;

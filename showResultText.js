@@ -1,6 +1,6 @@
 import createElement from './createElement.js';
 
-function showResultText(name) {
+const showResultText = (name) => {
   const $resultText = createElement('div', 'resultText');
   if (name) {
     $resultText.innerText = `${name} wins`;

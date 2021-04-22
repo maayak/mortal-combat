@@ -1,7 +1,7 @@
 import { $arenas } from './globalConstants.js';
 import createElement from './createElement.js';
 
-function createReloadButton() {
+const createReloadButton = () => {
   const $reloadWrap = createElement('div', 'reloadWrap');
   const $reloadButton = createElement('button', 'button');
 

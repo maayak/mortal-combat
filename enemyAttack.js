@@ -1,7 +1,7 @@
 import random from './random.js';
 import { HIT, ATTACK } from './hitAttack.js'
 
-function enemyAttack() {
+const enemyAttack = () => {
   const hit = ATTACK[random(3) - 1];
   const defence = ATTACK[random(3) - 1];
   const enemy = {
