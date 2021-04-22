@@ -1,8 +1,7 @@
 import createElement from './createElement.js';
 
-const createPlayer = (playerObj) => {
-  const { hp, name, img } = playerObj;
-  const $player = createElement('div', `player${playerObj.player}`);
+const createPlayer = ({player, hp, name, img }) => {
+  const $player = createElement('div', `player${player}`);
   const $progressbar = createElement('div', 'progressbar');
   const $character = createElement('div', 'character');
   const $life = createElement('div', 'life');

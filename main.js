@@ -8,11 +8,8 @@ import init from './init.js';
 
 $formFight.addEventListener('submit', (e) => {
   e.preventDefault();
-
-  const enemy = enemyAttack();
-  const player = playerAttack();
-  const { hit: playerHit, value: playerValue, defence: playerDefence } = player;
-  const { hit: enemyHit, value: enemyValue, defence: enemyDefence } = enemy;
+  const { hit: enemyHit, value: enemyValue, defence: enemyDefence } = enemyAttack();
+  const { hit: playerHit, value: playerValue, defence: playerDefence } = playerAttack();
 
   if (playerHit !== enemyDefence) {
     player2.changeHP(playerValue);

@@ -3,11 +3,9 @@ import { $chat } from './globalConstants.js';
 import random from './random.js';
 import currentDate from './time.js';
 
-const generateLogs = (type, attacker, defender, damage) => {
+const generateLogs = (type, { name: attackerName }, { name: defenderName, hp }, damage) => {
   let text = '';
-  const { name: attackerName } = attacker;
-  const { name: defenderName, hp } = defender;
-
+  
   switch (type) {
     case 'start':
       text = LOGS[type]
