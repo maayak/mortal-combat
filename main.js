@@ -1,12 +1,10 @@
-import { $arenas, $formFight} from './globalConstants.js';
 import { player1, player2 } from './players.js';
-import createPlayer from './createPlayer.js';
+import { $formFight} from './globalConstants.js';
 import enemyAttack from './enemyAttack.js';
 import playerAttack from './playerAttack.js';
 import getResultTitle from './getResultTitle.js'
 import generateLogs from './generateLogs.js';
-
-generateLogs('start', player1, player2);
+import init from './init.js';
 
 $formFight.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -34,5 +32,6 @@ $formFight.addEventListener('submit', (e) => {
 
   getResultTitle(player1, player2);
 });
-$arenas.appendChild(createPlayer(player1));
-$arenas.appendChild(createPlayer(player2));
+
+init();
+
