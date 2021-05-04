@@ -1,7 +1,7 @@
 :star:Это мой пет-проект, созданный в ходе JS-марафона: игра по мотивам Mortal Kombat, в которой мы будем наносить удары,
 защищаться и выводить лог боя на экран в стиле легендарной онлайн игры "Бойцовский клуб":star:
 
-[**LIVE DEMO**](https://maayak.github.io/mortal-kombat/)
+[**LIVE DEMO DESKTOP**](https://maayak.github.io/mortal-kombat/)
 
 :white_check_mark: Во время написания проекта я изучил и применил на практике следующие темы:
 - Метод console.log()
