@@ -1,12 +1,32 @@
-export const $arenas = document.querySelector('.arenas');
-export const $formFight = document.querySelector('.control');
-export const $chat = document.querySelector('.chat');
+const SELECTORS = {
+  ARENAS: '.arenas',
+  FORMFIGHT: '.control',
+  CHAT: '.chat',
+}
+
+export const CLASSLIST = {
+  PROGRESSBAR: 'progressbar',
+  CHARACTER: 'character',
+  LIFE: 'life',
+  NAME: 'name',
+  IMG: 'img',
+  RELOADWRAP: 'reloadWrap',
+  RELOADBUTTON: 'button',
+  RESULT: 'resultText',
+}
+
+export const $arenas = document.querySelector(SELECTORS.ARENAS);
+export const $formFight = document.querySelector(SELECTORS.FORMFIGHT);
+export const $chat = document.querySelector(SELECTORS.CHAT);
+
 export const HIT = {
-    head: 30,
-    body: 25,
+    head: 40,
+    body: 30,
     foot: 20,
   };
+
 export const ATTACK = ['head', 'body', 'foot'];
+
 export const LOGS = {
     start: 'Часы показывали [time], когда [player1] и [player2] бросили вызов друг другу.',
     end: [
@@ -46,5 +66,5 @@ export const LOGS = {
     ],
     draw: 'Ничья - это тоже победа!',
   };
-  
-  
+
+ 

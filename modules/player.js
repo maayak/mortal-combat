@@ -6,22 +6,11 @@ class Player {
     this.img = img;
   };
 
-  changeHP = (damage) => {
-    this.hp -= damage;
-    if (this.hp <= 0) {
-      this.hp = 0;
-    }
-    return this.hp;
-  };
+  changeHP = (damage) => this.hp <= 0 ? this.hp = 0 : this.hp -= damage;
 
-  elHP = () => {
-    return document.querySelector(`.player${this.player} .life`);
-  };
-
-  renderHP = () => {
-    this.elHP().style.width = `${this.hp}%`;
-    return this.hp;
-  };
+  changeImg = (url) => document.querySelector(`.player${this.player} .img`).src = url;
+  
+  renderHP = () => document.querySelector(`.player${this.player} .life`).style.width = `${this.hp}%`;
 };
 
 export default Player;

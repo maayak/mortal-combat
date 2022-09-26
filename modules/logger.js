@@ -4,6 +4,7 @@ class Logger {
   constructor() {
     this.utils = new Utils();
   }
+  
   generateLogs = (type, { name: attackerName }, { name: defenderName, hp }, damage) => {
     let text = '';
 

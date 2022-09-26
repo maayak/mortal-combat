@@ -1,3 +1,5 @@
+import { $arenas, CLASSLIST } from './globalConstants.js';
+
 class Create {
   createElement = (tag, className) => {
     const $tag = document.createElement(tag);
@@ -9,11 +11,11 @@ class Create {
   
   createPlayer = ({ player, hp, name, img }) => {
     const $player = this.createElement('div', `player${player}`);
-    const $progressbar = this.createElement('div', 'progressbar');
-    const $character = this.createElement('div', 'character');
-    const $life = this.createElement('div', 'life');
-    const $name = this.createElement('div', 'name');
-    const $img = this.createElement('img');
+    const $progressbar = this.createElement('div', CLASSLIST.PROGRESSBAR);
+    const $character = this.createElement('div', CLASSLIST.CHARACTER);
+    const $life = this.createElement('div', CLASSLIST.LIFE);
+    const $name = this.createElement('div', CLASSLIST.NAME);
+    const $img = this.createElement('img', CLASSLIST.IMG);
   
     $life.style.width = `${hp}%`;
     $name.innerText = name;
@@ -31,8 +33,8 @@ class Create {
   };
   
   createReloadButton = () => {
-    const $reloadWrap = createElement('div', 'reloadWrap');
-    const $reloadButton = createElement('button', 'button');
+    const $reloadWrap = this.createElement('div', CLASSLIST.RELOADWRAP);
+    const $reloadButton = this.createElement('button', CLASSLIST.RELOADBUTTON);
   
     $reloadButton.innerText = 'restart';
   
